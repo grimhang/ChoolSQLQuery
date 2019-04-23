@@ -1,0 +1,42 @@
+1. 프로시저 종류
+    - Sub 프로시저 : 리턴값이 없는 함수
+        
+    - Function 프로시저 : 리턴값이 있는 함수
+        
+        
+2. Sub프로시저
+    
+3. Function프로시저
+    Function getCircle(r As Double) As Double        
+        getCircle = 2 * r * 3.141592
+    End Function
+    
+4. 다른 프로시저 호출하기
+    a. Sub프로시저 호출
+        Msgbox "안녕하세요"
+        
+    b. Function프로시저 호출하기
+        Dim num as Long
+        
+        num = GetTwiceVal(5)
+        
+==================================================
+== 고급 ==
+
+1. 입력파라메터 갯수가 틀릴때
+    Public Function gfnConCatConds(ParamArray Conds()) As String
+
+        Dim var As Variant
+        Dim strConds As String
+        
+        For Each var In Conds
+            If Trim(var) <> "" Then
+                strConds = strConds & var & vbNewLine
+            End If
+        Next
+        
+        gfnConCatConds = strConds
+        
+    '    If Mid(strConds, 1, 2) = vbNewLine Then strConds = Mid(strConds, 3)
+        
+    End Function        

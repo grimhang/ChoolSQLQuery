@@ -1,0 +1,113 @@
+1. 컬렉션 예제
+    VBA 에디터의 직접실행창에 다음과 같이 쳐보자
+    ?Currentproject.AllForms(1).Name
+
+2. For Each ~ Next 로 컬렉션 루프
+    Dim 컨트롤 As Control
+    
+    DoCmd.OpenForm "f주문서"
+    
+    For Each 컨트롤 In Forms("f주문서").Controls
+        Debug.Print 컨트롤.Name
+    Next
+    
+3. 실제예. 모든컨트롤의 IME모드를 "현재 상태 유지"로 바꾸기
+
+    Public Sub gsbSetIMEMode()
+     
+        '2009-06-26, 염기웅
+        '현재 프로젝트의 모든 폼의 IME모드를 '현재 상태 유지'로 변경해 주는 프로시저
+        'IME모드가 3(사용안함)일 경우에는 변경하지 않는다. --> '암호' 컨트롤일 가능성이 있음
+        '실행하기 전 열려 있는 폼이 없어야 한다.
+         
+        On Error GoTo Herror
+         
+            Dim Obj As Object
+            Dim frm As Access.Form
+            Dim lngAnswer As VbMsgBoxResult
+            Dim strMsg As String
+            Dim ctr As Control
+             
+             
+        '작업 확인
+            strMsg = "현재 프로젝트의 모든 폼의 컨트롤에 대해서 IME모드를 '현재 상태 유지'로 변경합니다." & vbNewLine & _
+                     "계속 하시겠습니까?"
+            lngAnswer = MsgBox(strMsg, vbYesNo)
+            If lngAnswer = vbNo Then Exit Sub
+         
+         
+        '상태 체크: 모든 폼은 닫혀 있어야 한다.
+            For Each frm In Forms
+                Select Case frm.Name
+                    Case Else
+                        MsgBox "열려 있는 폼이 있습니다."
+                        Exit Sub
+                End Select
+            Next
+             
+             
+        '모든 폼에 대해서 수행
+            For Each Obj In CurrentProject.AllForms
+                 
+                '폼 열기
+                DoCmd.OpenForm Obj.Name, acDesign
+                Set frm = Forms(Obj.Name)
+                 
+                '작업 수행
+                For Each ctr In frm.Controls
+                    sbSetIMEMode ctr
+                Next
+                 
+                '폼 닫기
+                DoCmd.Close acForm, Obj.Name, acSaveYes
+                DoEvents
+            Next
+             
+            MsgBox "IME모드 속성을 고쳤습니다."
+            Exit Sub
+         
+        Herror:
+            Select Case Err.Number
+                Case Else
+                    MsgBox Err.Description & vbNewLine & Err.Number
+                    Stop
+            End Select
+         
+    End Sub
+     
+     
+    Public Sub gsbSetCurrFormIMEMode()
+     
+        Dim frm As Access.Form
+        Dim ctr As Access.Control
+         
+        Set frm = Screen.ActiveForm
+         
+        '작업 수행
+        For Each ctr In frm.Controls
+            Debug.Print ctr.Name
+            sbSetIMEMode ctr
+        Next
+     
+        MsgBox "IME모드 속성을 고쳤습니다."
+         
+    End Sub
+     
+     
+    Private Sub sbSetIMEMode(ctr As Control)    
+        On Error Resume Next
+         
+            Select Case ctr.IMEMode
+                Case 3          '3 = fmIMEModeDisable --> 주로 암호 입력란에 포함되어 있을 가능성이 높다.
+                    Exit Sub
+                 
+                Case 0          '0 = fmIMEModeNoControl --> '현재 상태 유지'
+                    Exit Sub
+                 
+                Case Else
+                    ctr.IMEMode = 0
+            End Select     
+    End Sub    
+    
+    ps) 열린 개체 참조하기
+    Forms 컬렉션 개체는 '열려 있는 모든 폼들'이라고 이해하면 됩니다. 마찬가지로 'Reports' 컬렉션 개체 역시 '열려 있는 모든 보고서들'이라고 이해하면 됩니다. 'Forms'든 'Reports'든, 닫혀 있는 개체를 참조할 수 없습니다.

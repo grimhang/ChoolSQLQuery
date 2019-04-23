@@ -1,0 +1,56 @@
+=== 설정 편 ===
+1. 변수선언 필수
+    Option Explicit을 맨 처음에 넣으면 오류방지, 디버깅에 좋다
+    
+    설정에서 default할수도
+        도구-옵션-편집기-변수선언요구
+
+2. 자동 구문 검사 끄기
+    도구 / 옵션 / 자동 구문 검사 uncheck
+
+
+=== 문법 편 ===
+1. 주석
+    ' 콤마 1개로 줄을 주석으로 만들수 있다.
+
+2. 프로젝트 탐색기
+    - Microsoft Access 클래스 : 모든 폼/보고서 모듈에 접근할수 있습니다.
+    - 모듈 : 폼/보고서 모듈이 아닌, 전역 모듈에 접근가능
+    - 클래스 모듈: 객체 지향 프로그래밍 기법에 의한 '객체'를 디자인한 모듈에 접근할수 있습니다.
+    
+3. Sub 프로시저
+    리턴값이 없는 함수
+    괄호가 아니고 한칸 띄어서 실행
+    
+    예) MsgBox "Hello"
+    
+4. 변수
+    Dim str as String   '문자열 변수 선언. 
+    Dim dt as Date
+    Dim num as Long
+    Dim bool as Boolean     ' True / False
+    Dim var as Variant      '타입을 지정하지 않으면 Variant.   Null값을 가질수 있는 유일한 데이터 형식
+    
+5. 상수
+    Const 테스트폼명 As String = "테스트폼1"
+    Const num As Long = 50
+    Const 숫자 As Double = 3.141592
+    Const 크리스마스 As Date = #12/25/2016#
+
+6. 배열
+    a. 배열 선언
+        Dim strArr(0 to 10) as String    ' 총 11개 string
+        Dim strArr2(20) as String       ' 총 21개
+
+    b. 배열 재조정
+        Dim strArr3() as String   '인스턴스만 있고 크기가 없어서 사용불가
+        Redim Preserve strArr3(5)   '6개로 재조정. Preserve는 기존배열에 있던 값 유지
+        strArr3(0) = "애플"
+
+
+
+    
+    
+    
+
+

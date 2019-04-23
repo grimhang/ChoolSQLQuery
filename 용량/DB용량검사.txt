@@ -1,0 +1,8 @@
+SELECT D.name DBName
+	, CAST(F.size AS BIGINT) * 8/ 1024 siz_mb
+	, F.*	
+FROM master.SYS.master_files F
+	JOIN master.SYS.databases D		ON F.database_id = D.database_id
+WHERE D.NAME NOT IN ('MASTER', 'TEMPDB', 'MODEL', 'MSDB')
+--group by D.name
+ORDER BY D.NAME

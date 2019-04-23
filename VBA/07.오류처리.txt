@@ -1,0 +1,19 @@
+== 폼 컨트롤 이벤트 ==
+    1. On Error Goto Lable
+        Sub Sample()
+        
+        On Error Goto Herror
+        
+            Exit Sub
+            
+        Herror :
+            Msgbox Err.Number & ":" & Err.Description
+        End Sub    
+        
+    2. On Error Resume Next
+        에러가 나도 무시하고 다음으로 간다.
+        
+== 에러 처리 원칙 ==
+    1. 모든 이벤트 프로시저는 On Error Goto Lable 오류 처리기를 추가한다.
+    2. 최상단 프로시저만 에러처리 로직이 들어가야 한다.
+    

@@ -1,0 +1,74 @@
+== 폼 컨트롤 이벤트 ==
+    1. 주요 폼 컨트롤 이벤트
+        - Windows 이벤트
+            Open    : 폼을 열고 첫 레코드가 표시되기 전(취소 가능)
+            Close   : 폼을 닫아 화면에서 없앨때
+            Load    : 폼이 열리고 폼의 레코드가 표시될때
+            Unload  : 폼을 닫을때 폼이 화면에 없어지기 전(취소 가능)
+            Resize  : 폼 크기를 조정할 때
+            
+        Focus 이벤트
+            Activate    : ?이 활성화 될때
+            Deactivate  : ?이 비활성 될때
+            Enter       : 컨트롤이 포커스를 받기 직전
+            Exit        : 컨트롤이 포커스를 잃기 직전에(취소 가능)
+            GotFocus    : 폼이나 컨트롤이 포커스를 가질때
+            LostFocus   : 폼이나 컨트롤이 포커스를 잃을때
+            
+        Data 이벤트
+            BeforeDelConfirm    : 삭제를 확인하는 대화상자가 나타나기전
+            AfterDelConfirm     : 실제로 레코드를 삭제하거나 삭제를 취소한 후에
+        
+            BeforeInsert        : 레코드를 삽입하기 직전에(취소 가능)
+            AfterInsert         : 레코드를 삽입한 후에
+            BeforeUpdate        : 레코드를 변경하기 직전(취소 가능)
+            AfterUpdate         : 레코드를 변경한 직후
+            
+            Change              : 텍스트 상자 내용이나 콤보 상자 텍스트 부분을 변경할 때, 탭 컨트롤의 한 페이지에서 다른 페이지로 이동할 때
+            Current             : 폼의 현재 레코드가 변경될 때, 폼이 새로 고쳐질 때, 폼이 다시 쿼리될 때
+            
+        Mouse 이벤트
+            Click           : 마우스를 해당 개체를 클릭
+            DblClick        : 마우스를 개체를 더블클릭했을때(취소 가능)
+            MouseDown       : 해당 개체위에서 마우스 단추를 눌렀을때
+            MouseUp         : 해당 개체위에서 마우스 단추를 눌렀다가 놓았을때
+            MouseMove       : 해당 개체위에서 마우스가 이동 중일때
+            
+        Keyboard 이벤트
+            KeyDown         : 폼이나 컨트롤에 포커스가 있는동안 키를 눌렀을때
+            KeyUp           : 폼이나 컨트롤에 포커스가 있는동안 눌렀던 키를 놓았을때
+            KeyPress        : 폼이나 컨트롤에 포커스가 있는동안 키를 눌렀다 떼었을때
+            
+        Filter 이벤트
+            Filter          : 폼의 필터 기능을 활성화 할때
+            ApplyFilter     : 폼에서 필터를 적용할때
+            
+        기타 이벤트
+            Error           : 폼에서 런타임 오류가 발생할때
+            Timer           : 폼에서 TimerInterval속성에서 지정한 시간 간격에 따라 발생할때
+            
+    2. 폼/컨트롤 이벤트 순서 알아보기
+        - 새 레코드 입력시 이벤트 발생순서
+            새 레코드 입력 시작 -> BeforeUpdate -> 데이터 저장 시도 -> Before Update -> AfterUpdate -> AfterInsert
+            
+        - 기존 레코드 Update 이벤트 순서
+            데이터 저장 시도 -> Before Update -> AfterUpdate
+            
+        - 폼 / 컨트롤 이벤트 순서 알아보기
+            a. 폼을 열때                    : Open -> Load -> Resize -> Activate -> Current
+            b. 폼을 닫을때                  : Unload -> Deactivate -> Close
+            c. 열려 있는 폼 사이 전환       : Deactivate(Form1) -> Activate(Form2)
+            d. 레코드 삭제                  : Delete -> Current -> BeforeDelConfirm -> AfterDelConfirm
+        
+== 보고서 이벤트 ==
+    1. 주요 보고서 이벤트
+        Open(취소 가능) : 보고서를 미리보거나 인쇄하기 전
+        Format          : 보고서 구역에 속할 데이터가 결정될때, 미리보기나 인쇄를 위해 구역 서식이 설정되기 전환
+        Print           : 보고서 구역의 데이터를 인쇄할수 있게 서식을 설정한 다음, 구역을 인쇄하기 전환
+        Close           : 보고서를 닫아 화면에서 없앨 때
+        NoData          : 데이터가 없는 보고서를 인쇄하려고 서식을 설정한 후 보고서가 인쇄되기 전에
+                            이 이벤트를 사용하면 백지 보고서가 인쇄되는것을 취소 할수 있음
+        Page            : Page 이벤트는 보고서의 페이지를 인쇄하려고 서식을 설정한 다음 페이지를 인쇄하기 전에 이 이벤트를 사용하여 페이지에
+                            테두리를 그리거나 다른 그래픽 요소를 추가할 수 있음
+        Retreat         : 보고서 서식을 지정하는 동안 이전의 보고서 구역으로 되돌아갈 때
+                            

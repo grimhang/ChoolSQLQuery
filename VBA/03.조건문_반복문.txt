@@ -1,0 +1,92 @@
+1. 조건문
+    a. If
+        If a > b Then
+            Msgbox "A계좌의 잔액이 1000원 미만입니다."
+            Exit Sub
+        ElseIf Then
+            Msgbox "B계좌의 잔액이 1000원 미만입니다."
+            Debug.Print "Yes"
+        Else
+        End If
+
+        한줄If
+            If a > b Then Msgbox "A계좌의 잔액이 1000원 미만입니다."
+
+    b. Select
+        Select Case 성적
+            Case Is < 60            'Is 안붙여도 편집기가 자동으로 붙임.
+                등급 = "F"
+            Case Is < 70
+                등급 = "D"
+            Case Else
+                등급 = "A"
+        End Select
+        
+        Select Case 등급
+            Case "A", "B", "C", "D"
+                결과 = "합격"
+            Case Else
+                결과 = "불합격"
+        End Select
+        
+        Select Case 성적
+            Case 0 To 59
+                등급 = "F"
+            Case 60 To 69
+                등급 = "D"
+            Case Else
+                등급 = "A"
+        End Select
+
+2. 반복 구문 익히기
+    a. For
+        For 카운터변수 = 시작값 To 종료값 [Step 증가값]
+            vba구문
+            Exit For
+        Next
+    
+        예) 
+            Pubic Sub 일부터백_For()
+                Dim 반복 As Long
+                Dim 결과 As Long
+                
+                For 반복 = 1 To 100
+                    결과 = 결과 + 반복
+                Next
+                
+                Debug.Print 결과
+            End Sub
+        
+        
+    b. Do While | Until
+        Do While | Until
+            VBA구문
+            Exit Do
+            VBA구문
+        Loop
+
+        예)
+            Pubic Sub 일부터백_Do()
+                Dim 반복 As Long
+                Dim 결과 As Long
+                
+                Do 반복 < 100
+                    반복 = 반복 + 1
+                    결과 = 결과 + 반복
+                Loop
+                
+                Debug.Print 결과
+            End Sub
+    
+    c. Do 후방 While | Until
+        Do
+            VBA구문
+            Exit Do
+            VBA구문
+        Loop While | Until
+    
+    d. For Each
+        For Each 요소변수 In 컬렉션개체
+            VBA구문
+            Exit For
+        Next

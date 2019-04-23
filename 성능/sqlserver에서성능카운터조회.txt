@@ -1,0 +1,4 @@
+select *
+from sys.dm_os_performance_counters
+where object_name like '%Manager%'
+	and counter_name = 'Page life expectancy'

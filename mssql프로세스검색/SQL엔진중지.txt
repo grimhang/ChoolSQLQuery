@@ -1,0 +1,19 @@
+net stop mssqlserver
+net stop sqlserveragent
+
+net start mssqlserver
+net start sqlserveragent
+
+------------------------------
+net stop mssql$인스턴스명
+net stop sqlAgent$인스턴스명
+
+net start mssql$인스턴스명
+net start sqlAgent$인스턴스명
+
+클러스터 환경일때 서비스에서 죽이거나 작업관리자에서 죽이면 Failover가 되지만
+
+SQL Server 구성 관리자에서 죽이면 넘어가지 않고 페일오버 관리자에서 중지됨이라고 뜨고
+넘어가지는 않는다.
+
+이 방법을 쓰던지 리소스 Offline을 하던지 2개중에 하나를 선택하면 된다.

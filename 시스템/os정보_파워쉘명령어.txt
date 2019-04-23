@@ -1,0 +1,8 @@
+systeminfo | findstr 프로세서		-- cpu 물리 코어수
+wmic cpu get NumberOfCores
+wmic cpu get NumberOfLogicalProcessors
+echo %NUMBER_OF_PROCESSORs%
+
+
+UI 버전
+msinfo32
