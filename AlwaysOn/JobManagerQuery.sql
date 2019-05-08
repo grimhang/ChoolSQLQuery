@@ -7,6 +7,8 @@ from sys.configurations
 where name like '%quer%'
 */
 
+
+-- 01. 연결된서버 만들기
 DECLARE @LocalServerName NVARCHAR(100)
 	, @Counter INT
 	, @sql NVARCHAR(1000)
@@ -42,6 +44,22 @@ END
 
 DROP TABLE #TempTable
 
+-- 02. msdb에 tJobList 테이블 만들기
+CREATE TABLE tJobList
+(
+	JobName nvarchar(200) not null
+	, enabled tinyint not null
+	, description nvarchar(1024) not null
+	, JobCreateDTM datetime not null
+)
+
+
+
+
+select name JobName, enabled, description
+from msdb.dbo.sysjobs
+where category_id <> 3		-- 데이터베이스 유지관리 계획 제외
+order by name
 
 
 
