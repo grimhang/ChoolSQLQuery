@@ -8,7 +8,7 @@ CREATE TABLE #DBCC (
 	,OBJECT NVARCHAR(128)
 	,FIELD NVARCHAR(128)
 	,VALUE NVARCHAR(128)
-	)
+)
 
 DECLARE @BLOCKED TABLE (
 	BLOCKER_SPID SMALLINT
@@ -23,7 +23,8 @@ DECLARE @BLOCKED TABLE (
 	,LOCK_RESOURCE VARCHAR(30)
 	,BLOCKER_SQL TEXT
 	,BLOCKED_SQL TEXT
-	)
+)
+
 DECLARE @BLOCKED2 TABLE (
 	BLOCKER_SPID SMALLINT
 	,BLOCKER_CONTEXT VARCHAR(128)
@@ -38,7 +39,7 @@ DECLARE @BLOCKED2 TABLE (
 	,INDEXID INT
 	,BLOCKER_SQL TEXT
 	,BLOCKED_SQL TEXT
-	)
+)
 
 SET NOCOUNT ON
 
@@ -70,59 +71,59 @@ DECLARE @BLOCKER_SPID SMALLINT
 --	-------------------------------------------------------------------------------------
 DECLARE PROCESSES CURSOR
 FOR
-SELECT BLOCKER.spid
-	,-- BLOCKER_SPID
-	RTRIM(convert(VARCHAR(128), BLOCKER.context_info))
-	,-- BLOCKER_CONTEXT
-	CASE BLOCKER.blocked -- BLOCKER_STATUS
-		WHEN 0
-			THEN 'Lead Blocker'
-		ELSE 'In Blocking Chain'
-		END
-	,BLOCKED.spid
-	,-- BLOCKED_SPID
-	RTRIM(convert(VARCHAR(128), BLOCKED.context_info))
-	,-- BLOCKER_CONTEXT
-	BLOCKED.waittime
-	,-- BLOCKED_WAITTIME
-	CASE CONVERT(TINYINT, BLOCKED.waittype) -- LOCK_MODE
-		WHEN 1  THEN 'SCH-ST'
-		WHEN 2  THEN 'SCH-MOD'
-		WHEN 3  THEN 'S'
-		WHEN 4  THEN 'U'
-		WHEN 5	THEN 'X'
-		WHEN 6  THEN 'IS'
-		WHEN 7  THEN 'IU'
-		WHEN 8  THEN 'IX'
-		WHEN 9  THEN 'SIU'
-		WHEN 10	THEN 'SIX'
-		WHEN 11	THEN 'UIX'
-		WHEN 12	THEN 'BU'
-		WHEN 13	THEN 'RangeS-S'
-		WHEN 14	THEN 'RangeS-U'
-		WHEN 15	THEN 'RangeIn-Null'
-		WHEN 16	THEN 'RangeIn-S'
-		WHEN 17	THEN 'RangeIn-U'
-		WHEN 18	THEN 'RangeIn-X'
-		WHEN 19	THEN 'RangeX-S'
-		WHEN 20	THEN 'RangeX-U'
-		WHEN 21	THEN 'RangeX-X'
-		ELSE 'UNKNOWN'
-		END
-	,SUBSTRING(BLOCKED.waitresource, 1, 3)
-	,-- LOCK_RESOURCE_TYPE
-	BLOCKED.dbid
-	,-- DBID
-	SUBSTRING(BLOCKED.waitresource, 6, 30)
-	,-- LOCK_RESOURCE
-	BLOCKER.sql_handle
-	,BLOCKER.cmd
-	,BLOCKED.sql_handle
-	,BLOCKED.cmd
-FROM master..sysprocesses BLOCKER
-INNER JOIN master..sysprocesses BLOCKED ON BLOCKER.spid = BLOCKED.blocked
-WHERE BLOCKED.blocked <> 0
-	AND BLOCKER.dbid = db_id()
+    SELECT BLOCKER.spid
+        ,-- BLOCKER_SPID
+        RTRIM(convert(VARCHAR(128), BLOCKER.context_info))
+        ,-- BLOCKER_CONTEXT
+        CASE BLOCKER.blocked -- BLOCKER_STATUS
+            WHEN 0
+                THEN 'Lead Blocker'
+            ELSE 'In Blocking Chain'
+            END
+        ,BLOCKED.spid
+        ,-- BLOCKED_SPID
+        RTRIM(convert(VARCHAR(128), BLOCKED.context_info))
+        ,-- BLOCKER_CONTEXT
+        BLOCKED.waittime
+        ,-- BLOCKED_WAITTIME
+        CASE CONVERT(TINYINT, BLOCKED.waittype) -- LOCK_MODE
+            WHEN 1  THEN 'SCH-ST'
+            WHEN 2  THEN 'SCH-MOD'
+            WHEN 3  THEN 'S'
+            WHEN 4  THEN 'U'
+            WHEN 5	THEN 'X'
+            WHEN 6  THEN 'IS'
+            WHEN 7  THEN 'IU'
+            WHEN 8  THEN 'IX'
+            WHEN 9  THEN 'SIU'
+            WHEN 10	THEN 'SIX'
+            WHEN 11	THEN 'UIX'
+            WHEN 12	THEN 'BU'
+            WHEN 13	THEN 'RangeS-S'
+            WHEN 14	THEN 'RangeS-U'
+            WHEN 15	THEN 'RangeIn-Null'
+            WHEN 16	THEN 'RangeIn-S'
+            WHEN 17	THEN 'RangeIn-U'
+            WHEN 18	THEN 'RangeIn-X'
+            WHEN 19	THEN 'RangeX-S'
+            WHEN 20	THEN 'RangeX-U'
+            WHEN 21	THEN 'RangeX-X'
+            ELSE 'UNKNOWN'
+            END
+        , SUBSTRING(BLOCKED.waitresource, 1, 3)
+        --, LOCK_RESOURCE_TYPE
+        , BLOCKED.dbid
+        --, DBID
+        , SUBSTRING(BLOCKED.waitresource, 6, 30)
+        --, LOCK_RESOURCE
+        , BLOCKER.sql_handle
+        ,BLOCKER.cmd
+        ,BLOCKED.sql_handle
+        ,BLOCKED.cmd
+    FROM master..sysprocesses BLOCKER
+    INNER JOIN master..sysprocesses BLOCKED ON BLOCKER.spid = BLOCKED.blocked
+    WHERE BLOCKED.blocked <> 0
+        AND BLOCKER.dbid = db_id()
 
 OPEN PROCESSES
 
@@ -238,10 +239,7 @@ BEGIN
 	--	-------------------------------------------------------------------------------------
 	--	Delimiter positions are then used to substring fields from @LOCK_RESOURCE
 	--	-------------------------------------------------------------------------------------
-	IF @LOCK_TYPE IN (
-			'RID'
-			,'PAG'
-			)
+	IF @LOCK_TYPE IN ('RID','PAG')
 	BEGIN
 		--	-------------------------------------------------------------------------------------
 		--	Extract objectid and indexid from file/page for resources of RID or PAG.
