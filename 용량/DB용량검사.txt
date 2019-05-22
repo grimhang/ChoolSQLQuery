@@ -6,3 +6,6 @@ FROM master.SYS.master_files F
 WHERE D.NAME NOT IN ('MASTER', 'TEMPDB', 'MODEL', 'MSDB')
 --group by D.name
 ORDER BY D.NAME
+
+로그파일 용량 검사
+dbcc sqlperf(logspace)

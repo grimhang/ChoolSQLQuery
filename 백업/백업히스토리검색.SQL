@@ -18,7 +18,8 @@ SELECT
     , S.description 
 FROM msdb.dbo.backupmediafamily MF
     JOIN msdb.dbo.backupset S ON MF.media_set_id = S.media_set_id 
-WHERE (CONVERT(datetime, S.backup_start_date, 102) >= GETDATE() - 7) 
+WHERE S.backup_start_date > GETDATE() - 2       -- 2일전까지
+    AND S.TYPE = 'D'                            -- 풀백업(D), 차등백업(I), 트랜잭션로그백업(L)....
 ORDER BY 
-S.database_name, 
-S.backup_finish_date
+	S.database_name, 
+	S.backup_finish_date

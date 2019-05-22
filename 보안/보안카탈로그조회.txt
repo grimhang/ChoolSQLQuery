@@ -1,0 +1,14 @@
+-- 로그인계정의 서버 권한 조사
+SELECT pr.principal_id, pr.name, pr.type_desc,   
+    pe.state_desc, pe.permission_name   
+FROM sys.server_principals AS pr   
+JOIN sys.server_permissions AS pe   
+    ON pe.grantee_principal_id = pr.principal_id;  
+
+
+-- server role member 조사
+SELECT S.role_principal_id, R.name AS RoleName,   
+    S.member_principal_id, M.name AS MemberName  
+FROM sys.server_role_members  AS S
+	JOIN sys.server_principals AS R      ON S.role_principal_id = R.principal_id  
+	JOIN sys.server_principals AS M      ON S.member_principal_id = M.principal_id;  
