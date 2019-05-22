@@ -86,48 +86,27 @@ SELECT BLOCKER.spid
 	BLOCKED.waittime
 	,-- BLOCKED_WAITTIME
 	CASE CONVERT(TINYINT, BLOCKED.waittype) -- LOCK_MODE
-		WHEN 1
-			THEN 'SCH-ST'
-		WHEN 2
-			THEN 'SCH-MOD'
-		WHEN 3
-			THEN 'S'
-		WHEN 4
-			THEN 'U'
-		WHEN 5
-			THEN 'X'
-		WHEN 6
-			THEN 'IS'
-		WHEN 7
-			THEN 'IU'
-		WHEN 8
-			THEN 'IX'
-		WHEN 9
-			THEN 'SIU'
-		WHEN 10
-			THEN 'SIX'
-		WHEN 11
-			THEN 'UIX'
-		WHEN 12
-			THEN 'BU'
-		WHEN 13
-			THEN 'RangeS-S'
-		WHEN 14
-			THEN 'RangeS-U'
-		WHEN 15
-			THEN 'RangeIn-Null'
-		WHEN 16
-			THEN 'RangeIn-S'
-		WHEN 17
-			THEN 'RangeIn-U'
-		WHEN 18
-			THEN 'RangeIn-X'
-		WHEN 19
-			THEN 'RangeX-S'
-		WHEN 20
-			THEN 'RangeX-U'
-		WHEN 21
-			THEN 'RangeX-X'
+		WHEN 1  THEN 'SCH-ST'
+		WHEN 2  THEN 'SCH-MOD'
+		WHEN 3  THEN 'S'
+		WHEN 4  THEN 'U'
+		WHEN 5	THEN 'X'
+		WHEN 6  THEN 'IS'
+		WHEN 7  THEN 'IU'
+		WHEN 8  THEN 'IX'
+		WHEN 9  THEN 'SIU'
+		WHEN 10	THEN 'SIX'
+		WHEN 11	THEN 'UIX'
+		WHEN 12	THEN 'BU'
+		WHEN 13	THEN 'RangeS-S'
+		WHEN 14	THEN 'RangeS-U'
+		WHEN 15	THEN 'RangeIn-Null'
+		WHEN 16	THEN 'RangeIn-S'
+		WHEN 17	THEN 'RangeIn-U'
+		WHEN 18	THEN 'RangeIn-X'
+		WHEN 19	THEN 'RangeX-S'
+		WHEN 20	THEN 'RangeX-U'
+		WHEN 21	THEN 'RangeX-X'
 		ELSE 'UNKNOWN'
 		END
 	,SUBSTRING(BLOCKED.waitresource, 1, 3)
