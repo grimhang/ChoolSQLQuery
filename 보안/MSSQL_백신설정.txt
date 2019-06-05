@@ -1,0 +1,18 @@
+https://support.microsoft.com/ko-kr/help/309422/choosing-antivirus-software-for-computers-that-run-sql-server
+
+MS-SQL이 설치된 서버에 백신 소프트웨어를 설치하려고 하면 다음과 같은 예외설정을 하셔야 합니다.
+
+1. SQL Server 데이터파일 폴더. 일반적으로 .mdf, .ndf, .ldf 등의 파일이 있는 폴더
+
+2. SQL Server 백업 파일들이 있는 폴더. 보통 풀백업은 .bak, 트랜잭션 로그백업은 .trn 확장자의 파일이 있는 폴더
+
+3. 전체 텍스트 카탈로그 폴더
+    기본 인스턴스일 경우 : $MSSQL_HOME\MSSQL\FTDATA
+    명명된 인스턴스일 경우 : $MSSQL_HOME\MSSQL$인스턴스명\FTDATA
+    
+4. 로그파일 폴더
+    
+5. 클러스터링 고려 사항
+    Q:\쿼럼드라이브
+    MSDTC 드라이브
+    C:\Windows\Cluster
