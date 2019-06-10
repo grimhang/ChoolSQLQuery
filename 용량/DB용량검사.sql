@@ -47,5 +47,5 @@ ORDER BY D.[name]
 GO
 
 
-로그파일 용량 검사
+--로그파일 용량 검사
 dbcc sqlperf(logspace)
