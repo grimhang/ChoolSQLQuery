@@ -1,8 +1,8 @@
-systeminfo | findstr ÇÁ·Î¼¼¼­		-- cpu ¹°¸® ÄÚ¾î¼ö
-wmic cpu get NumberOfCores
-wmic cpu get NumberOfLogicalProcessors
-echo %NUMBER_OF_PROCESSORs%
+C:\> systeminfo | findstr í”„ë¡œì„¸ì„œ		-- cpu ë¬¼ë¦¬ ì½”ì–´ìˆ˜
+PC C:\> wmic cpu get NumberOfCores
+PC C:\> wmic cpu get NumberOfLogicalProcessors
+C:\> echo %NUMBER_OF_PROCESSORs%
 
 
-UI ¹öÀü
+UI ë²„ì „
 msinfo32
