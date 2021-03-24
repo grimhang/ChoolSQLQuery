@@ -1,7 +1,8 @@
 -- 시스템조사(CPU, Memory)
 SELECT cpu_count AS LogiclaCPUCount, hyperthread_ratio AS HyperthreadRatio, cpu_count / hyperthread_ratio AS PhysicalCPUCount
 	, affinity_type, affinity_type_desc, virtual_machine_type, virtual_machine_type_desc
-	, physical_memory_kb / 1024 physical_memory_MB, sql_memory_model, sql_memory_model_desc
+	, physical_memory_kb / 1024 physical_memory_MB
+    --, sql_memory_model, sql_memory_model_desc  -- 2014버전에서는 없음
 FROM sys.dm_os_sys_INFO
 
 -- Memory 조사
