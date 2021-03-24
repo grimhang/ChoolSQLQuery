@@ -1,0 +1,3 @@
+```powershell
+ps sqlservr | ft name,  @{name='PrivateMemory(MB)';expression={$_.PrivateMemorySize64/1MB};formatstring='N0';align='right'}, @{name='WorkingSet(MB)';expression={$_.Workingset64/1MB};formatstring='N0';align='right'} -AutoSize
+```
