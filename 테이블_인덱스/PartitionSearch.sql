@@ -7,6 +7,6 @@ FROM sys.tables AS T
     JOIN sys.partitions                     AS P        ON I.object_id = P.object_id AND I.index_id = P.index_id   
     JOIN sys.partition_schemes              AS PS       ON I.data_space_id = PS.data_space_id  
     JOIN sys.partition_functions            AS PF       ON PS.function_id = PF.function_id  
-    LEFT JOIN sys.partition_range_values    AS R        ON PF.function_id = R.function_id and R.boundary_id = P.partition_number  
+    LEFT JOIN sys.partition_range_values    AS R        ON PF.function_id = R.function_id and R.boundary_id = (P.partition_number -1)
 WHERE T.name = 'TABLE_NAME' AND I.type <= 1  
 ORDER BY P.partition_number;  
