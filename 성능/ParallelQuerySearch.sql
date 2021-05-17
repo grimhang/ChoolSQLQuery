@@ -45,4 +45,4 @@ AND	n.value('(@StatementSubTreeCost)[1]', 'float') BETWEEN @CurrentCostThreshold
 WHERE
 	RankPerText = 1 -- This would filter out duplicate statements, returning only those with the highest usecount
 ORDER BY
-	usecounts DESC
+	usecounts DESC 
