@@ -11,9 +11,9 @@ More info:
 https://eitanblumin.com/2018/11/06/planning-to-increase-cost-threshold-for-parallelism-like-a-smart-person
 */
 DECLARE
-	  @MinUseCount			INT	= 50	-- Set minimum usecount to ignore rarely-used plans
-	, @CurrentCostThreshold		FLOAT	= 5	-- Serves as minimum sub-tree cost
-	, @MaxSubTreeCost		FLOAT	= 30	-- Set the maximum sub-tree cost, plans with higher cost than this wouldn't normally interest us
+	  @MinUseCount			INT	= 50	— Set minimum usecount to ignore rarely-used plans
+	, @CurrentCostThreshold		FLOAT	= 5	— Serves as minimum sub-tree cost
+	, @MaxSubTreeCost		FLOAT	= 30	— Set the maximum sub-tree cost, plans with higher cost than this wouldn't normally interest us
 
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
@@ -43,6 +43,6 @@ AND	ecp.usecounts > @MinUseCount
 AND	n.value('(@StatementSubTreeCost)[1]', 'float') BETWEEN @CurrentCostThreshold AND @MaxSubTreeCost
 ) AS Q
 WHERE
-	RankPerText = 1 -- This would filter out duplicate statements, returning only those with the highest usecount
+	RankPerText = 1 — This would filter out duplicate statements, returning only those with the highest usecount
 ORDER BY
-	usecounts DESC 
+	usecounts DESC  -- 수정
