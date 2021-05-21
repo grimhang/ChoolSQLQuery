@@ -1,14 +1,13 @@
 /*
 select *
 from opendatasource('SQLNCLI', 'Data Source=ELRNGDB2;Integrated Security=SSPI').master.dbo.sysobjects
-
 select *
 from sys.configurations
 where name like '%quer%'
 */
 
 
--- 01. ¿¬°áµÈ¼­¹ö ¸¸µé±â
+-- 01. ì—°ê²°ëœì„œë²„ ë§Œë“¤ê¸°
 DECLARE @LocalServerName NVARCHAR(100)
 	, @Counter INT
 	, @sql NVARCHAR(1000)
@@ -44,7 +43,7 @@ END
 
 DROP TABLE #TempTable
 
--- 02. msdb¿¡ tJobList Å×ÀÌºí ¸¸µé±â
+-- 02. msdbì— tJobList í…Œì´ë¸” ë§Œë“¤ê¸°
 CREATE TABLE tJobList
 (
 	JobName nvarchar(200) not null
@@ -58,24 +57,24 @@ CREATE TABLE tJobList
 
 select name JobName, enabled, description
 from msdb.dbo.sysjobs
-where category_id <> 3		-- µ¥ÀÌÅÍº£ÀÌ½º À¯Áö°ü¸® °èÈ¹ Á¦¿Ü
+where category_id <> 3		-- ë°ì´í„°ë² ì´ìŠ¤ ìœ ì§€ê´€ë¦¬ ê³„íš ì œì™¸
 order by name
 
 
 
 
--- 01. ¿¬°áµÈ ¼­¹ö
+-- 01. ì—°ê²°ëœ ì„œë²„
 EXEC sp_addlinkedserver @server = 'LNK_ELRNGPRDDB2',@srvproduct=N'SQL Server', @datasrc = 'ELRNGPRDDB2', @catalog = 'msdb'
-EXEC sp_addlinkedsrvlogin @rmtsrvname = N'ELRNGPRDDB2', @locallogin = NULL , @useself = N'True'		--  ·Î±×ÀÎÀÇ ÇöÀç º¸¾È ÄÁÅØ½ºÆ®¸¦ ÅëÇØ ¿¬°á
+EXEC sp_addlinkedsrvlogin @rmtsrvname = N'ELRNGPRDDB2', @locallogin = NULL , @useself = N'True'		--  ë¡œê·¸ì¸ì˜ í˜„ì¬ ë³´ì•ˆ ì»¨í…ìŠ¤íŠ¸ë¥¼ í†µí•´ ì—°ê²°
 
 
 
--- AG µ¥ÀÌÅÍº£ÀÌ½º
+-- AG ë°ì´í„°ë² ì´ìŠ¤
 SELECT *
 FROM sys.availability_databases_cluster
 
 
--- ¸®½º³Ê Á¤º¸
+-- ë¦¬ìŠ¤ë„ˆ ì •ë³´
 SELECT L.dns_name, L.port, L.ip_configuration_string_from_cluster
 	, IP.ip_address, IP.network_subnet_ip, IP.state, IP.state_desc
 FROM sys.availability_group_listeners L
@@ -83,7 +82,7 @@ FROM sys.availability_group_listeners L
 ORDER BY ip_address DESC
 
 
--- ³ëµå
+-- ë…¸ë“œ
 select G.name AGName, G.automated_backup_preference_desc
 	, S.replica_server_name
 	, R.is_local, R.role, r.role_desc, r.operational_state_desc, r.recovery_health_desc, r.synchronization_health_desc
