@@ -23,5 +23,4 @@ SELECT [db_name] = CASE [database_id]
 	,db_buffer_percent = CONVERT(DECIMAL(6, 3), db_buffer_pages * 100.0 / @total_buffer)
 FROM src
 ORDER BY db_buffer_MB DESC;
-출처:
-https: //sungwookkang.com/397 [Data Science Lab]
+
