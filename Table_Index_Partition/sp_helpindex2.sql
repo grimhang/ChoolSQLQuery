@@ -100,7 +100,7 @@ FROM SYS.OBJECTS AS T1
 	    --SELECT TOP 1 *
 	    --FROM SYS.DM_DB_INDEX_OPERATIONAL_STATS(DB_ID(), T1.OBJECT_ID, I.INDEX_ID, NULL)
 	    --WHERE 1 =   CASE 
-			            -WHEN T1.TYPE_DESC = 'SQL_TABLE_VALUED_FUNCTION'
+			            -- WHEN T1.TYPE_DESC = 'SQL_TABLE_VALUED_FUNCTION'
 				     --       THEN 0
 			            --ELSE 1
 			        --END
