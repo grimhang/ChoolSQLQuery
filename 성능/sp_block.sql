@@ -1,4 +1,11 @@
-CREATE PROCEDURE SP_BLOCK @BATCH CHAR(1) = NULL
+use master
+go
+
+IF OBJECT_ID('SP_BLOCK') IS NULL
+    EXEC ('CREATE PROC SP_BLOCK AS SELECT 1')
+GO
+
+ALTER PROCEDURE SP_BLOCK 
 AS
 -- ***********************************************************************
 -- This stored procedure is provided AS IS with no warranties and confers no rights.
@@ -303,29 +310,7 @@ BEGIN
 		SET @INDEXID = SUBSTRING(@LOCK_RESOURCE, @DELIMITER2 + 1, (@DELIMITER3 - @DELIMITER2) - 1)
 	END
 
-	--	-------------------------------------------------------------------------------------
-	--	If executing in batch, write directly to SQLPERF..BLOCKED_PROCESSES
-	--	-------------------------------------------------------------------------------------
-	IF @BATCH IS NOT NULL
-		INSERT INTO SQLPERF..BLOCKED_PROCESSES
-		WITH (TABLOCKX)
-		VALUES (
-			GETDATE()
-			,@BLOCKED_SPID
-			,@BLOCKED_CONTEXT
-			,@BLOCKER_SPID
-			,@BLOCKER_CONTEXT
-			,@BLOCKER_STATUS
-			,@WAITTIME
-			,LEFT(DB_NAME(@DBID), 8)
-			,LEFT(OBJECT_NAME(@OBJECTID), 18)
-			,@INDEXID
-			,@LOCK_TYPE
-			,@LOCK_MODE
-			,@BLOCKER_SQL
-			,@BLOCKED_SQL
-			)
-	ELSE
+
 		--	-------------------------------------------------------------------------------------
 		--	Otherwise, insert into temp table for subsequent OUTPUT
 		--	-------------------------------------------------------------------------------------
@@ -366,7 +351,6 @@ DEALLOCATE BLOCKED
 --	-------------------------------------------------------------------------------------
 --	Format output.
 --	-------------------------------------------------------------------------------------
-IF @BATCH IS NULL
 	SELECT BLOCKED_DTTM = GETDATE()
 		,BLOCKED_SPID
 		,BLOCKED_CONTEXT
@@ -388,3 +372,6 @@ IF @BATCH IS NULL
 RETURN
 GO
 
+EXEC sys.sp_MS_marksystemobject
+    'sp_block';   -- skip this for Azure
+GO    
