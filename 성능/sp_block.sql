@@ -7,9 +7,10 @@ GO
 
 ALTER PROCEDURE SP_BLOCK 
 AS
--- ***********************************************************************
--- This stored procedure is provided AS IS with no warranties and confers no rights.
--- ***********************************************************************
+/* ***********************************************************************
+-- 2023-01-11   박성출     버그 수정
+                            AND BLOCKER.dbid = db_id() 주석 처리
+-- **********************************************************************/
 CREATE TABLE #DBCC (
 	PARENTOBJECT NVARCHAR(128)
 	,OBJECT NVARCHAR(128)
@@ -130,7 +131,7 @@ FOR
     FROM master..sysprocesses BLOCKER
     INNER JOIN master..sysprocesses BLOCKED ON BLOCKER.spid = BLOCKED.blocked
     WHERE BLOCKED.blocked <> 0
-        AND BLOCKER.dbid = db_id()
+        --AND BLOCKER.dbid = db_id()
 
 OPEN PROCESSES
 
