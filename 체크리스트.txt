@@ -1,0 +1,91 @@
+1. MS-SQL 2019 패치 버전 old
+	현재 버전 : RTM(초기제품). 최신 패치 버전 : CU18
+	약 3년 차이
+	
+2. Max Server Memory 설정
+	현재 미설정. 64GB 메모리이니 설정을 58GB
+	
+3. DB Port 1433 
+	
+	
+4. sa 계정
+	보안 문제. 보통은 비활성화
+	
+5. clr enabled 	
+	암호화 솔루션 때문에 켜진것으로 판단됨
+	
+6. blocked process threshold 
+	현재 0. 10으로 변경 권장
+	
+7. cost threshold for parallelism
+    현재 5(기본값). 50에서 시작하여 높이거나 낮추기. brentozar
+    
+8. max degree of parallelism 
+    현재 8(기본값. cpu core도 8)
+    
+9. E드라이브에 템프, 데이터파일, 트랜잭션로그파일이 함께 존재
+    템프, 데이터파일, 인덱스파일, 트랜잭션 로그파일이 물리적으로 분리되어야 경합이 발생하지 않음
+    최소한 템프, 데이파일, 트랜잭션로그파일 3가지만으로 분리되어야 함께
+
+10. 레이드 구성
+    Raid 10 권장
+    
+    현재
+    멤버십 DB는 HCI 장비 내 iSCSI 볼륨을 할당하여 공유 스토리지로 사용함.
+    스토리지 유형: VSAN
+    RAID: RAID-1
+    
+11. 데이터베이스 자동 증가 크기 너무 작음
+    lottegrs : 64MB -> 0.1초.   300MB 로 바꾸자
+    SecureDB : 10MB             300MB 로
+    
+    파일즉시초기화가 설정안되어 있어 느림. 1GB로 바꿀지 고민   
+    
+12. MVCC 문제
+    현재 개발에만 적용중. 
+    
+13. SQL Server Agent 기록 한달 보관
+    SQL Server Agent 속성 / 기록 / 
+    
+    스크립트 설치 지원.
+    
+14. 백업
+    
+15. 데이터베이스 페이지 압축
+
+16. 데이터베이스 즉시 초기화 disable임
+    on 권장
+    
+    select *
+    from sys.dm_server_services 의 instant_file_initialization_enabled 열 Y여야 함
+
+17. 기본 백업 위치를 별도의 디스크로 변경
+    현재는 E:\MSSQL15.MSSQLSERVER\MSSQL\DATA\ 여서 데이터파일과 같은 디스크 드라이브
+    
+18. 메모리에 페이지 잠금(Lock page in Memory) 설정 안되어있음    
+
+19. 쿼리 저장소 켜기. 현재 꺼져있음
+
+20. 339개의 테이블 및 인데스가 오래된 데이터 통계.
+    처음번에 수동으로 해주고 나중에는 자동 통계 업데이트 스크립트 기능 설치하겠음.
+    토론을 해보고 얘기해주신다고 함.
+
+
+21. 트랜잭션 로그 백업 이 150일 동안 안되어 있음.
+    오라클 아카이브 로그 풀과 비슷한 문제 발생
+    
+22. 5개의 함수가 테이블 스캔 발생
+    
+23. 인덱스 조각 34개
+    
+    
+24. 원격 전용 관리자 연결 켜기
+
+-- 25. Optimize For Ad-Hoc Workloads'  사용ㅎ기
+    Doctor는 권장하나 DBA들은 아니다. 어느게 정답인지 모르겠다.
+    
+25. 데드락 추적하는 절차가 없음.
+    추적 스크립트 기능 설치 하겠음.
+    
+    
+26. 서버 collation과 데이터베이스 collation이 맞아야    
