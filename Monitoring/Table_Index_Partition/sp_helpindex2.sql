@@ -68,7 +68,8 @@ BEGIN
 		,T1.NAME AS TableName
 		,I.TYPE_DESC IndexType
 		,I.NAME AS IndexName
-		, STAT1.Index_id AS IndexId	
+		--, STAT1.Index_id AS IndexId	
+        , I.index_id as IndexId
 		,INDEXSIZEKB AS IndexSizeKB
 		,LEFT(CAST(SUBSTRING(B.INDEX_COLUMN_DESC, 3, 1000) AS NVARCHAR(500)), 500) AS IndexColumn       -- [2023-03-06 여기해결] XML결과값은 텍스트모드에서 무한정 길어지는 문제 해결
 		,LEFT(CAST(SUBSTRING(C.INCLUDE_COLUMN_DESC, 3, 1000) AS NVARCHAR(500)), 500) AS IncludeColumn
@@ -161,7 +162,7 @@ BEGIN
 	WHERE IS_MS_SHIPPED = 0
 		AND T1.NAME =  @table_name
 		AND T1.schema_id = ISNULL(@schema_id, 1)
-	ORDER BY 1, 2, 3, 4, 5, 6, 7, I.INDEX_ID
+	ORDER BY 1, 2, 3, 4, 5, 6, 7--, I.INDEX_ID
 END
 GO
 
