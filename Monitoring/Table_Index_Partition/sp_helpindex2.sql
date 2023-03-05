@@ -16,6 +16,9 @@ ALTER PROCEDURE SP_HELPINDEX2 @NAME NVARCHAR(4000) = ''
         ----------   	--------------- --------------------------
         2022-03-25      박성출         	처음 작성
         2023-03-05      박성출          azure에서는 use master 사용안하도록 안내
+        2023-03-06      박성출          텍스트모드에서 컬럼명에 해당하는 대시줄이 무한정 길어지는 문제 해결
+                                        [2023-03-06 여기해결] <-- 이 키워드로 검색
+                                
 
         exec sp_helpindex2 Mytable                       -- 스키마가 dbo인 테이블
         exec sp_helpindex2 ezmes.Mytable2				 -- 스키마가 ezmes인 테이블
@@ -67,14 +70,14 @@ BEGIN
 		,I.NAME AS IndexName
 		, STAT1.Index_id AS IndexIDd	
 		,INDEXSIZEKB AS IndexSizeKB
-		,SUBSTRING(B.INDEX_COLUMN_DESC, 3, 1000) AS IndexColumn
-		,SUBSTRING(C.INCLUDE_COLUMN_DESC, 3, 1000) AS IncludeColumn
+		,LEFT(CAST(SUBSTRING(B.INDEX_COLUMN_DESC, 3, 1000) AS NVARCHAR(500)), 500) AS IndexColumn       -- [2023-03-06 여기해결] XML결과값은 텍스트모드에서 무한정 길어지는 문제 해결
+		,LEFT(CAST(SUBSTRING(C.INCLUDE_COLUMN_DESC, 3, 1000) AS NVARCHAR(500)), 500) AS IncludeColumn
 		,STATS_DATE(i.object_id, i.index_id) AS [STATISTICUPDATEDATE]
 		,I.IS_UNIQUE
 		,I.IS_UNIQUE_CONSTRAINT
 		,I.IS_PRIMARY_KEY
 		,I.HAS_FILTER
-		,I.FILTER_DEFINITION
+		,LEFT(CAST(I.FILTER_DEFINITION AS NVARCHAR(500)), 500) AS FILTER_DEFINITION
 		,I.IS_DISABLED
 		,STAT1.*
 		--,STAT2.*
