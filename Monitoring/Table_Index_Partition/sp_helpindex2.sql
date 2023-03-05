@@ -68,7 +68,7 @@ BEGIN
 		,T1.NAME AS TableName
 		,I.TYPE_DESC IndexType
 		,I.NAME AS IndexName
-		, STAT1.Index_id AS IndexIDd	
+		, STAT1.Index_id AS IndexId	
 		,INDEXSIZEKB AS IndexSizeKB
 		,LEFT(CAST(SUBSTRING(B.INDEX_COLUMN_DESC, 3, 1000) AS NVARCHAR(500)), 500) AS IndexColumn       -- [2023-03-06 여기해결] XML결과값은 텍스트모드에서 무한정 길어지는 문제 해결
 		,LEFT(CAST(SUBSTRING(C.INCLUDE_COLUMN_DESC, 3, 1000) AS NVARCHAR(500)), 500) AS IncludeColumn
