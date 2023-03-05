@@ -1,6 +1,4 @@
--- revert
-
-use master
+use master  -- skip this for Azure 
 go
 
 IF OBJECT_ID('SP_HELPINDEX2') IS NULL
@@ -17,6 +15,7 @@ ALTER PROCEDURE SP_HELPINDEX2 @NAME NVARCHAR(4000) = ''
         DATE         	Developer       Change
         ----------   	--------------- --------------------------
         2022-03-25      박성출         	처음 작성
+        2023-03-05      박성출          azure에서는 use master 사용안하도록 안내
 
         exec sp_helpindex2 Mytable                       -- 스키마가 dbo인 테이블
         exec sp_helpindex2 ezmes.Mytable2				 -- 스키마가 ezmes인 테이블
