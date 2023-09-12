@@ -5,7 +5,7 @@ IF OBJECT_ID('sp_who_chool') IS NULL
     EXEC ('CREATE PROC sp_who_chool AS SELECT 1')
 GO
 
-ALTER  PROC dbo.sp_who_chool @status varchar(100) = 'active', @IncludeLocalYN CHAR(1) = 'Y', @TYPE TINYINT = 1
+ALTER  PROC dbo.sp_who_chool @status varchar(100) = 'active', @IncludeLocalYN CHAR(1) = 'Y', @TYPE TINYINT = 1, @DbName VARCHAR(50) = 'master'
 
 /**************************************************************
 -- Title        : sp_who2의 커스텀 버전 V1
@@ -18,12 +18,14 @@ ALTER  PROC dbo.sp_who_chool @status varchar(100) = 'active', @IncludeLocalYN CH
         ----------   	--------------- --------------------------
         2019-09-08      박성출         	처음 작성
         2019-12-18      박성출          client_net_address 에서 <local machine> 제외로직 case문으로 변경
+		2023-09-12		박성출			특정데이터베이스만 선택할수 있도록
 
         exec sp_who_chool                        -- default(active sesseion)
-        exec sp_who_chool 'all'                  -- all sesseion        
+        exec sp_who_chool 'all'                  -- all sesseion
         exec sp_who_chool @IncludeLocalYN = 'N'  -- only not local session
         exec sp_who_chool 'all', 'N'             -- all session, not local
         exec sp_who_chool null, 'N'
+		exec sp_who_chool @status = 'all', @DbName = 'MyDBName'
 **************************************************************/
 
 
@@ -87,6 +89,11 @@ BEGIN
                         CASE WHEN @statusVar = 'active' THEN 'suspended'        ELSE 'a' END
                     )
                 )
+			AND (					
+					CASE WHEN @DbName <> 'master'		THEN DB_NAME(P.dbid)	ELSE 'a' END
+					=
+					CASE WHEN @DbName <> 'master'		THEN @DbName			ELSE 'a' END
+				)
         ORDER BY C.session_id
 
     END
