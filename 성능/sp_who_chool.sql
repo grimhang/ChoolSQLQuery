@@ -51,7 +51,7 @@ BEGIN
             , P.physical_io AS DiskIO
             --, CL.UserName
             --, cl.ClientIP
-            , P.hostname
+            , P.hostname AS ClientHostName
             , C.client_net_address AS ClientIP
             --, CL.ClientMac    
             , P.net_address ClientMac -- 정확치 않음. 확인요망
