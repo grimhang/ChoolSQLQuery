@@ -21,6 +21,7 @@ ALTER  PROC dbo.sp_who_chool @status varchar(100) = 'all', @IncludeLocalYN CHAR(
         2023-09-12  박성출          특정데이터베이스만 선택할수 있도록
         2023-09-13  박성출          모든 세션보기를 default값으로 변경. active 세션은 option으로
                                     ClientApp을 case와 replace를 같이 씀
+                                    Client HostName 추가
 
         exec sp_who_chool                             	-- default(all sesseion)
         exec sp_who_chool 'active'                      -- active sesseion
@@ -50,6 +51,7 @@ BEGIN
             , P.physical_io AS DiskIO
             --, CL.UserName
             --, cl.ClientIP
+            , P.hostname
             , C.client_net_address AS ClientIP
             --, CL.ClientMac    
             , P.net_address ClientMac -- 정확치 않음. 확인요망
