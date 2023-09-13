@@ -9,9 +9,9 @@ ALTER  PROC dbo.sp_who_chool @status varchar(100) = 'all', @IncludeLocalYN CHAR(
 
 /**************************************************************
 -- Title        : sp_who2의 커스텀 버전 V1
--- Author     : 박성출
+-- Author       : 박성출
 -- Create date  : 2019-09-08
--- Alter date   : 2022-03-25
+-- Alter date   : 2023-09-13
 -- Description  : 나만의 버전
     
         DATE        Developer    	Change
