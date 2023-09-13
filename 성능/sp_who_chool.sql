@@ -14,22 +14,21 @@ ALTER  PROC dbo.sp_who_chool @status varchar(100) = 'all', @IncludeLocalYN CHAR(
 -- Alter date   : 2022-03-25
 -- Description  : 나만의 버전
     
-        DATE        Developer		Change
+        DATE        Developer    	Change
         ----------  --------------- --------------------------
         2019-09-08	박성출          처음 작성
         2019-12-18  박성출          client_net_address 에서 <local machine> 제외로직 case문으로 변경
         2023-09-12  박성출          특정데이터베이스만 선택할수 있도록
         2023-09-13  박성출          모든 세션보기를 default값으로 변경. active 세션은 option으로
-									ClientApp을 case와 replace를 같이 씀
+                                    ClientApp을 case와 replace를 같이 씀
 
-        exec sp_who_chool								-- default(all sesseion)
-        exec sp_who_chool 'active'						-- active sesseion
-        exec sp_who_chool @IncludeLocalYN = 'N'			-- without local session
-        exec sp_who_chool 'all', 'N'					-- all session, not local
+        exec sp_who_chool                             	-- default(all sesseion)
+        exec sp_who_chool 'active'                      -- active sesseion
+        exec sp_who_chool @IncludeLocalYN = 'N'         -- without local session
+        exec sp_who_chool 'all', 'N'                    -- all session, not local
         exec sp_who_chool null, 'N'
         exec sp_who_chool @status = 'all', @DbName = 'MyDBName'
 **************************************************************/
-
 
 AS
 BEGIN
